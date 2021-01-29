@@ -1,9 +1,19 @@
 <template>
     <div>
         <h4>Messages</h4>
-        <ul>
-            <li>First</li>
-            <li>Second</li>
+        <ul  v-for="(message, index) in messages" :key="index">
+            <li>{{message}}</li>
         </ul>
     </div>
 </template>
+<script>
+    export default {
+        data() {
+            return {
+                messages: [
+                    "hello", "hhi"
+                ]
+            };
+        }
+    }
+</script>
