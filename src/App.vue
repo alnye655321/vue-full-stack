@@ -1,26 +1,27 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+    <v-app-bar app color="primary" dark>
+      <v-btn flat to="/">Messages</v-btn>
+      <v-spacer />
+      <v-btn flat to="/users">Users</v-btn>
     </v-app-bar>
 
     <v-main>
-      <Messages/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Messages from './components/Messages';
+// import Messages from "./components/Messages";
+// import Users from "./components/Users";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
-    Messages,
+    // Messages,
+    // Users,
   },
 
   data: () => ({
