@@ -15,7 +15,7 @@ const routes = [
   {path: "/users", component:Users},
 ]
 
-const router = new VueRouter({routes});
+const router = new VueRouter({routes, mode: 'history'}); //history mode gets rid of '#' in page url
 
 new Vue({
   vuetify,

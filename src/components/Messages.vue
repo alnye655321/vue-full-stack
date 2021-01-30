@@ -58,7 +58,7 @@ export default {
   created() {
     //this.$store.dispatch('setUsers'); //trigger an async action in store
     // this.fetchUsers();
-    this.testDelay();
+    // this.testDelay();
   },
   methods: {
     fetchUsers: function () {

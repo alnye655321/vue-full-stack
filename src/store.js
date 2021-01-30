@@ -21,8 +21,10 @@ export default new Vuex.Store({
             axios
                 .get("http://localhost:8080/api/v1/users")
                 .then((res) => {
-                    commit('assignUsers', res.data)
+                    commit('assignUsers', res.data);
                     console.log(this);
+                    console.log(this.getters.allusers);
+
 
                     //test display in card-----------------------------------
                     let itemTemps = [];
@@ -33,9 +35,21 @@ export default new Vuex.Store({
                             subtitle: res.data[i].email,
                         };
                     }
-                    commit('assignItems', itemTemps);
+                    // commit('assignItems', itemTemps);
                     console.log('setUsers finished');
                     //test display in card-----------------------------------
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        },
+        getUser({ commit }, id) { //this.$store.dispatch('getUser', 1);
+            axios
+                .get(`http://localhost:8080/api/v1/users/${id}`)
+                .then((res) => {
+                    console.log(commit);
+                    console.log(res.data);
 
                 })
                 .catch((err) => {
