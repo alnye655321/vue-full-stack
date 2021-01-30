@@ -51,10 +51,11 @@ import axios from "axios";
 export default {
   data() {
     return {
-      items: [],
+      items: [], //local var here, being transformed by store value of users below
     };
   },
   created() {
+    //this.$store.dispatch('setUsers'); //trigger an async action in store
     this.fetchUsers();
   },
   methods: {
@@ -62,9 +63,15 @@ export default {
       axios
         .get("http://localhost:8080/api/v1/users")
         .then((res) => {
+          this.$store.commit("assignUsers", res.data);
+
+          //test display in card-----------------------------------
           let data = res.data;
           let itemTemps = [];
-          for (let i = 0; i < data.length; i++) {
+
+          // console.log(this.$store);
+
+          for (let i = 0; i < this.$store.getters.allusers.length; i++) {
             itemTemps[i] = {
               avatar: "https://cdn.vuetifyjs.com/images/lists/5.jpg",
               title: data[i].name,
@@ -72,10 +79,18 @@ export default {
             };
           }
           this.items = itemTemps;
+          console.log(this.$store.getters.allusers);
+          // console.log(this);
+          //test display in card-----------------------------------
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+  },
+  computed: {
+    getUsers() {
+      return this.$store.getters.allUsers;
     },
   },
 };
