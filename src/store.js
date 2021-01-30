@@ -12,7 +12,7 @@ export default new Vuex.Store({
         assignUsers(state, users) {
             state.users = users;
         },
-        newMessage(state, user) {
+        newUser(state, user) {
             state.users.push(user);
         }
     },

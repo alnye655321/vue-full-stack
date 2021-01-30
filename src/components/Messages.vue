@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3>{{ getUsers }}</h3>
     <h4>Messages</h4>
     <v-card max-width="450" class="mx-auto">
       <v-toolbar color="cyan" dark>
@@ -57,6 +58,7 @@ export default {
   created() {
     //this.$store.dispatch('setUsers'); //trigger an async action in store
     this.fetchUsers();
+    this.testDelay();
   },
   methods: {
     fetchUsers: function () {
@@ -87,10 +89,25 @@ export default {
           console.log(err);
         });
     },
+    testDelay: function () {
+      let _this = this;
+      setTimeout(function () {
+        console.log("delay");
+        let user = {
+          userId: 3,
+          name: "betty2",
+          hashedPassword: "pw2",
+          email: "a2@aol.com",
+        };
+        console.log(this);
+        _this.$store.commit("newUser", user);
+      }, 5000);
+    },
   },
   computed: {
+    //can be used within template code
     getUsers() {
-      return this.$store.getters.allUsers;
+      return this.$store.state.users;
     },
   },
 };
