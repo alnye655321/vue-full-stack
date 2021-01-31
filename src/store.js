@@ -78,12 +78,12 @@ export default new Vuex.Store({
             // commit("auth", token);
         },
         login({ commit }, userData) {
-            axios.post('http://localhost:8080/api/v1/auth', userData)
+            axios.post('http://localhost:8080/api/v1/authenticate', userData)
                 .then(function (res) {
-                    let token = res.data.userId;
+                    let token = res.data.token;
                     console.log('userId: ' + token);
                     localStorage.setItem('token', token);
-                    axios.defaults.headers.common['Authorization'] = token;
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
                     commit("auth", token);
                 })
                 .catch(function (err) {
