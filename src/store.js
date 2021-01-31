@@ -6,7 +6,8 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        users: []
+        users: [],
+        token: localStorage.getItem('token') || '',
     },
     mutations: {
         assignUsers(state, users) {
@@ -14,7 +15,10 @@ export default new Vuex.Store({
         },
         newUser(state, user) {
             state.users.push(user);
-        }
+        },
+        auth(state, token) {
+            state.token = token;
+        },
     },
     actions: { //can be used to perform async requests
         setUsers({ commit }) {
@@ -55,6 +59,40 @@ export default new Vuex.Store({
                 .catch((err) => {
                     console.log(err);
                 });
+        },
+        register({ commit }, userData) {
+            axios.post('http://localhost:8080/api/v1/users', userData)
+                .then(function (res) {
+                    let token = res.data.userId;
+                    console.log('userId: ' + token);
+                    localStorage.setItem('token', token);
+                    axios.defaults.headers.common['Authorization'] = token;
+                    commit("auth", token);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            // let token = (await axios.post("http://localhost:3000/register", registerData)).data;
+            // localStorage.setItem("token", token)
+            // axios.defaults.headers.common['Authorization'] = token;
+            // commit("auth", token);
+        },
+        login({ commit }, userData) {
+            axios.post('http://localhost:8080/api/v1/auth', userData)
+                .then(function (res) {
+                    let token = res.data.userId;
+                    console.log('userId: ' + token);
+                    localStorage.setItem('token', token);
+                    axios.defaults.headers.common['Authorization'] = token;
+                    commit("auth", token);
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+            // let token = (await axios.post("http://localhost:3000/register", registerData)).data;
+            // localStorage.setItem("token", token)
+            // axios.defaults.headers.common['Authorization'] = token;
+            // commit("auth", token);
         },
 
     },
